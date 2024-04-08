@@ -29,8 +29,8 @@ jobs:
         docker build -t test .
 
     - name: Tag Docker image
-      run: docker tag test cloudhight/test:latest    
+      run: docker tag test cloudhight:latest    
 
     - name: Push Docker image
-      run: docker push cloudhight/test:latest  
+      run: docker push cloudhight:latest  
     
