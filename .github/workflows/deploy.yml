@@ -27,9 +27,10 @@ jobs:
     - name: Build Docker image
       run: |
         docker build -t test .
+
+    - name: Tag Docker image
+      run: docker tag test cloudhight/test:latest    
+
+    - name: Push Docker image
+      run: docker push cloudhight/test:latest  
     
-    - name: push image 
-      run: |
-        docker tag test cloudhight/test:latest
-        echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        docker push cloudhight/test:latest
