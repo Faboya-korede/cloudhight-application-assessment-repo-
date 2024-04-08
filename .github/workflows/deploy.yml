@@ -22,10 +22,10 @@ jobs:
         distribution: 'temurin'
         #cache: maven
 
-    - name: Build the JAR file
-      run: mvn package
+   # - name: Build the JAR file
+    #  run: mvn package
 
     - name: Build Docker image
       run: |
-        mvn spring-boot:build-image -Dspring-boot.build-image.imageName=cloudhight:latest
+        docker build -t test .
         docker images  # Optional: List Docker images for verification
