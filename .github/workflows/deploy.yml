@@ -32,4 +32,4 @@ jobs:
       run: docker tag test cloudhight:latest    
 
     - name: push to docker hub 
-      run:  docker push cloudhight:latest
+      run:  docker push korede01/cloudhight
