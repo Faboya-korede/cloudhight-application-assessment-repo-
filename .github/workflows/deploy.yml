@@ -28,4 +28,4 @@ jobs:
     - name: Build Docker image
       run: |
         docker build -t test .
-        docker images  # Optional: List Docker images for verification
+        

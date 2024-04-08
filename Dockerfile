@@ -1,11 +1,23 @@
-# Use a base image with JRE to run the Spring Boot application
-FROM openjdk:11-jre-slim
+# Use a base image with Maven and JDK pre-installed
+FROM maven:3.8.4-openjdk-11-slim AS builder
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the JAR file from the .mvn/wrapper folder into the container
-COPY .mvn/wrapper/maven-wrapper.jar /app/maven-wrapper..jar
+# Copy the Maven project files to the working directory
+COPY . .
 
-# Command to run the Spring Boot application when the container starts
-CMD ["java", "-jar", "maven-wrapper..jar"]
+# Build the Maven project
+RUN mvn clean package
+
+# Use a smaller base image for the final image
+FROM adoptopenjdk/openjdk11:alpine-slim
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the built JAR file from the builder stage
+COPY --from=builder /app/target/spring-petclinic-2.4.2.war .
+
+# Command to run your application
+CMD ["java", "-jar", "spring-petclinic-2.4.2.war"]
