@@ -20,12 +20,10 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-        cache: maven
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
+        #cache: maven
 
     - name: Build docker image
-      run: mvn -X spring-boot:build-image
+      run: mvn spring-boot:build-image
 
     - name: List Docker Images
       run: docker images
