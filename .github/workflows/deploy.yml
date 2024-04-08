@@ -20,12 +20,10 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-        #cache: maven
-
-   # - name: Build the JAR file
-    #  run: mvn package
 
     - name: Build Docker image
       run: |
         docker build -t test .
-        
+        docker tag test cloudhight/test:latest
+        echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        docker push cloudhight/test:latest

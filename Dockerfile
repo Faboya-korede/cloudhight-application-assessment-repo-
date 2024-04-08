@@ -19,5 +19,8 @@ WORKDIR /app
 # Copy the built JAR file from the builder stage
 COPY --from=builder /app/target/spring-petclinic-2.4.2.war .
 
+
+EXPOSE 8080
+
 # Command to run your application
 CMD ["java", "-jar", "spring-petclinic-2.4.2.war"]
