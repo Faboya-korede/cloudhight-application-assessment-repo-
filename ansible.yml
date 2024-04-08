@@ -1,0 +1,19 @@
+---
+- name: Run docker system prune
+  hosts: localhost
+  become_user: root
+  become: yes
+  tasks:
+    - name: stop all container 
+      shell: docker stop $(docker ps -aq)
+      ignore_errors: yes
+
+    - name: Prune Docker system
+      shell: docker ps -aq | xargs docker rm -f
+      ignore_errors:  yes
+
+    - name: pull docker image
+      shell: docker pull korede01/cloudhight:latest
+
+    - name: start container 
+      shell: docker run -d -p 8080:8080 korede01/cloudhight 
