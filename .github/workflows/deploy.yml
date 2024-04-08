@@ -27,5 +27,5 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t your-image-name:latest .
+        mvn spring-boot:build-image
         docker images  # Optional: List Docker images for verification
