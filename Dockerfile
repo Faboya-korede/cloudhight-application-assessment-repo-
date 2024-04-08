@@ -14,7 +14,7 @@ FROM openjdk:11-jre-slim
 WORKDIR /app
 
 # Copy the JAR file built in the previous stage into the container
-COPY --from=build /app/target/maven-wrapper.jar /app/maven-wrapper.jar
+COPY --from=build /app/target/spring-petclinic-2.4.2.jar /app/spring-petclinic-2.4.2.jar
 
 # Command to run the Spring Boot application when the container starts
-CMD ["java", "-jar", "maven-wrapper.jar"]
+CMD ["java", "-jar", "spring-petclinic-2.4.2.jar"]
