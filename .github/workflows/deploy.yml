@@ -39,7 +39,7 @@ jobs:
     - name: push to docker hub 
       run:  docker push korede01/cloudhight
   
-  run-association:
+  Deploy-to-ASG:
     runs-on: ubuntu-latest
     needs: build
     steps:
