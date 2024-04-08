@@ -27,5 +27,5 @@ jobs:
 
     - name: Build Docker image
       run: |
-        mvn spring-boot:build-image
+        mvn spring-boot:build-image -Dspring-boot.build-image.imageName=cloudhight:latest
         docker images  # Optional: List Docker images for verification
