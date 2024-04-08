@@ -1,26 +1,26 @@
-# Use a base image with Maven and JDK pre-installed
-FROM maven:3.8.4-openjdk-11-slim AS builder
+FROM maven:3.8.3-openjdk-11-slim AS build
+
+WORKDIR /app
+COPY pom.xml .
+RUN mvn dependency:go-offline
+
+# Copy the application source code
+COPY src ./src
+
+# Build the application
+RUN mvn package -DskipTests
+
+# Use a lightweight Java runtime image
+FROM adoptopenjdk:11-jre-hotspot
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the Maven project files to the working directory
-COPY . .
+# Copy the built JAR file from the build stage to the current location
+COPY --from=build /app/target/*.war app.war
 
-# Build the Maven project
-RUN mvn clean package
-
-# Use a smaller base image for the final image
-FROM adoptopenjdk/openjdk11:alpine-slim
-
-# Set the working directory in the container
-WORKDIR /app
-
-# Copy the built JAR file from the builder stage
-COPY --from=builder /app/target/spring-petclinic-2.4.2.war .
-
-
+# Expose the port the application listens on
 EXPOSE 8080
 
-# Command to run your application
-CMD ["java", "-jar", "spring-petclinic-2.4.2.war"]
+# Specify the command to run your application
+CMD ["java", "-jar", "app.war"]

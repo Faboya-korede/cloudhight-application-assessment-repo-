@@ -30,7 +30,4 @@ jobs:
 
     - name: Tag Docker image
       run: docker tag test cloudhight:latest    
-
-    - name: Push Docker image
-      run: docker push cloudhight:latest  
     
