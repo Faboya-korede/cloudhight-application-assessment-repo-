@@ -51,12 +51,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Create new launch template 
-        run: echo "${{ secrets.TEMPLATE }}" >> userdata.sh
-
       - name: Deploy Launch Template
-        env:
-          LAUNCH_TEMPLATE_NAME: ${{ secrets.LAUNCH_TEMPLATE_NAME }}
         run: |
           aws ec2 modify-launch-template \
-            --launch-template-id ${{secrets.LAUNCH_TEMPLATE_ID}} 
+            --launch-template-id ${{secrets.LAUNCH_TEMPLATE_ID}} --default-version 1
