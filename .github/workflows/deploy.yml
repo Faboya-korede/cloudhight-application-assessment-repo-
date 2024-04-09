@@ -1,4 +1,4 @@
-name: Java CI with Maven
+name: Deploy to production
 
 on:
   push:
@@ -8,22 +8,12 @@ on:
     branches:
       - main
 
-permissions:
-  id-token: write
-  contents: read
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-
-      - name: Set up JDK 11
-        uses: actions/setup-java@v3
-        with:
-          java-version: '11'
-          distribution: 'temurin'
 
       - name: Login to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
@@ -32,10 +22,10 @@ jobs:
         run: docker build -t test .
 
       - name: Tag Docker image
-        run: docker tag test korede01/cloudhight:latest
+        run: docker tag test ${{ secrets.DOCKER_USERNAME }}/cloudhight:latest
 
       - name: Push to Docker Hub
-        run: docker push korede01/cloudhight
+        run: docker push  ${{ secrets.DOCKER_USERNAME }}/cloudhight
 
   Deploy-to-ASG-prod:
     runs-on: ubuntu-latest
