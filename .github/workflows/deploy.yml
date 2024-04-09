@@ -58,8 +58,6 @@ jobs:
         env:
           LAUNCH_TEMPLATE_NAME: ${{ secrets.LAUNCH_TEMPLATE_NAME }}
         run: |
-          aws ec2 create-launch-template \
-            --launch-template-name "${LAUNCH_TEMPLATE_NAME}" \
-            --version-description "Initial version" \
-            --tag-specifications 'ResourceType=launch-template,Tags=[{Key=Name,Value="${LAUNCH_TEMPLATE_NAME}"}]' \
+          aws ec2 modify-launch-template \
+            --launch-template-id "${secrets.LAUNCH_TEMPLATE_ID}" \
             --user-data file://userdata.sh
