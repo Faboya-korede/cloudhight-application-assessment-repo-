@@ -59,5 +59,4 @@ jobs:
           LAUNCH_TEMPLATE_NAME: ${{ secrets.LAUNCH_TEMPLATE_NAME }}
         run: |
           aws ec2 modify-launch-template \
-            --launch-template-id ${{secrets.LAUNCH_TEMPLATE_ID}} \
-            --user-data file://userdata.sh
+            --launch-template-id ${{secrets.LAUNCH_TEMPLATE_ID}} 
