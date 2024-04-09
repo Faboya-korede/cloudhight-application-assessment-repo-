@@ -53,6 +53,14 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Run AWS CLI to Trigger Systems Manager Association
+      - name: create new lauch template 
         run: |
-          aws ssm start-associations-once --association-ids ${{ secrets.ASSOCIATION_ID }}    
+          echo "${{ secrets.TEMPLATE }}" >> userdate.sh
+
+        -  
+
+      - name: Deploy Launch Template
+        env:
+          LAUNCH_TEMPLATE_NAME: ${{ secrets.LAUNCH_TEMPLATE_NAME }}
+        run: |
+          aws ec2 create-launch-template --launch-template-name "${LAUNCH_TEMPLATE_NAME}" --version-description "Initial version" --tag-specifications 'ResourceType=launch-template,Tags=[{Key=Name,Value="${LAUNCH_TEMPLATE_NAME}"}]' --user-data file://userdata.sh
